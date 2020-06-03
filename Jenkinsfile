@@ -1,11 +1,14 @@
 pipeline {
     agent any
+    tools{
+        maven 'maven3';
+    }
     stages {
-        stage('git checkout') {
-            steps {
-                bat "https://github.com/sakhayadeep/vault-test.git"
-            }
-        }
+        // stage('git checkout') {
+        //     steps {
+        //         bat "https://github.com/sakhayadeep/vault-test.git"
+        //     }
+        // }
  
         // stage('install') {
         //     steps {
