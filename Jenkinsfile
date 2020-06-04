@@ -1,30 +1,12 @@
-pipeline {
-    agent any
-    // tools{
-    //     maven 'maven3';
-    // }
-    stages {
-        // stage('git checkout') {
-        //     steps {
-        //         bat "https://github.com/sakhayadeep/vault-test.git"
-        //     }
-        // }
- 
-        // stage('install') {
-        //     steps {
-        //         bat "mvn install"
-        //     }
-        // }
-
-        // stage('test') {
-        //     steps {
-        //         bat "mvn test"
-        //     }
-        // }
-    
-        stage('package') {
-            steps {
-                sh "mvn clean package"
+pipeline{
+    agent none
+    stages{
+        stage("access vault"){
+            steps{
+                withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://host.docker.internal:8086'], vaultSecrets: [[path: 'test/test', secretValues: [[vaultKey: 'name'], [vaultKey: 'age']]]]) {
+                    sh "name=$name"
+                    sh "age=$age"
+                }
             }
         }
     }
